@@ -1,11 +1,12 @@
-const fs = require("fs");
-const shuffle = require("../utils/shuffle");
-const rawdata = fs.readFileSync("./TestData.json");
-const data = JSON.parse(rawdata);
-
+const data = require("./data.model");
 const scoresList = data.scoresList;
 
 function getRank(userScore) {
+	/*
+
+		Get the userScore then return the rank
+	
+	*/
 	let count = 0;
 	scoresList.forEach((score) => {
 		if (userScore > score) count++;
