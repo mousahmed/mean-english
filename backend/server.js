@@ -1,11 +1,19 @@
 const express = require("express");
 const wordsModel = require("./models/words.model");
 const scoresModel = require("./models/scores.model");
+const cors = require("cors");
 
 const app = express();
 const PORT = 3000;
 const getRandomWordsList = wordsModel.getRandomWordsList;
 const getRank = scoresModel.getRank;
+
+app.use(
+	cors({
+		origin: "http://localhost:4200",
+	})
+);
+app.use(express.json());
 
 app.get("/", (req, res) => {
 	res.status(200);
@@ -13,9 +21,10 @@ app.get("/", (req, res) => {
 	res.json(randomWordsList);
 });
 
-app.get("/score", (req, res) => {
+app.post("/rank", (req, res) => {
 	res.status(200);
-	const rank = getRank(90);
+	const score = req.body.score
+	const rank = getRank(score);
 	res.json(rank);
 });
 
